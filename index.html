@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Page 🖤</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(to top right, #ffc9de, #ffd1dc);
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    #content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 5;
+    }
+
+    .question {
+      font-size: 2.5rem;
+      color: black; /* text color black */
+      text-shadow: 1px 1px 2px #ff69b4;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: showQuestion 2s forwards;
+      padding: 20px;
+      max-width: 90%;
+    }
+
+    @keyframes showQuestion {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .heart {
+      width: 20px;
+      height: 20px;
+      background-color: black;
+      position: absolute;
+      top: 100%;
+      transform: rotate(-45deg);
+      animation: floatUp 8s linear infinite;
+      opacity: 0;
+      z-index: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background-color: black;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        top: 100%;
+        opacity: 0;
+        transform: translateX(0) translateY(0) rotate(-45deg) scale(0.5);
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        top: -10%;
+        transform: translateX(0) translateY(-100vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .final {
+      font-size: 3rem;
+      color: black;
+      text-shadow: 2px 2px 8px red;
+      opacity: 0;
+      transform: scale(0);
+      animation: finalReveal 2s forwards;
+      animation-delay: 2s;
+      text-align: center;
+    }
+
+    @keyframes finalReveal {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .sticker {
+      width: 150px;
+      height: 150px;
+      margin-top: 20px;
+      animation: popSticker 1s ease forwards;
+      opacity: 0;
+      object-fit: contain;
+    }
+
+    @keyframes popSticker {
+      to {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+    }
+
+    .hidden { display: none; }
+
+    button {
+      margin-top: 30px;
+      padding: 10px 30px;
+      background: #ff4d6d;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 2px 2px 10px #ff8fa3;
+      transition: transform 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="content">
+    <div class="question" id="question"></div>
+    <img src="" class="sticker hidden" id="sticker" />
+    <div class="final hidden" id="final">“I never believed that one person could mean so much…
+until you came into my life.
+Somehow, without even trying,
+you became my favorite thought, my happiest feeling,
+and the most beautiful part of my days.
+No matter how busy life gets,
+my mind always finds its way back to you.
+Some people are temporary memories…
+but you feel permanent to me.
+You are someone I can never forget,
+because a heart never forgets the person who made it feel special.” i love you my love ✨!</div>
+    <button id="nextBtn">Next</button>
+  </div>
+
+<script>
+  const questions = [
+    "Hey you,how are you! 🌸",
+    "Do you like sweet surprises? 🎁",
+    "તું એ લાગણી છે જેને હું ક્યારેય ગુમાવા નથી માંગતો.? 🧸",
+    "જીવનમાં ઘણા લોકો મળે છે અને સમય સાથે ભૂલાઈ જાય છે પણ કેટલાક લોકો દિલમાં એવી જગ્યા બનાવી જાય છે કે તેમને ક્યારેય ભૂલી શકાય નહીં તું એ જ વ્યક્તિ છે મારા માટે ✨",
+    "Get ready for harshad surpise! 🖤"
+    
+  ]
+
+  const stickers = [
+    "/1.png",
+    "/2.png",
+    "/3.png",
+    "/4.png",
+    "/5.png"
+  ];
+
+  let step = 0;
+  const questionEl = document.getElementById('question');
+  const stickerEl = document.getElementById('sticker');
+  const finalEl = document.getElementById('final');
+  const nextBtn = document.getElementById('nextBtn');
+
+  function showStep() {
+    if (step < questions.length) {
+      questionEl.textContent = questions[step];
+      stickerEl.src = stickers[step];
+      stickerEl.classList.remove('hidden');
+    } else {
+      questionEl.classList.add('hidden');
+      stickerEl.classList.add('hidden');
+      finalEl.classList.remove('hidden');
+      nextBtn.style.display = 'none';
+    }
+    step++;
+  }
+
+  nextBtn.addEventListener('click', showStep);
+
+  // Start with first question
+  showStep();
+
+  // Generate multiple hearts dynamically
+  for (let i = 0; i < 30; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+    heart.style.animationDelay = (Math.random() * 5) + 's';
+    document.body.appendChild(heart);
+  }
+</script>
+
+</body>
+</html>
